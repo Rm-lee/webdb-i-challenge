@@ -16,7 +16,7 @@ catch(err){
  next(err)
 }
 })
-
+//Post endpoint
 server.post("/", async (req,res,next) => {
  
  
@@ -33,6 +33,25 @@ server.post("/", async (req,res,next) => {
   next(err)
  }
  })
+
+ server.put("/:id", async (req,res,next) => {
+ 
+ 
+  try{
+  const data = {
+   name: req.body.name,
+   budget: req.body.budget
+  }
+ 
+  await db("accounts").where("id", req.params.id).update(data)
+  res.json(await db("accounts").where("id",req.params.id).first())
+
+  }
+  catch(err){
+   next(err)
+  }
+  })
+
 server.use((err, req, res, next) => {
 	console.log(err)
 	res.status(500).json({

@@ -34,6 +34,7 @@ server.post("/", async (req,res,next) => {
  }
  })
 
+ //Put
  server.put("/:id", async (req,res,next) => {
  
  
@@ -52,6 +53,16 @@ server.post("/", async (req,res,next) => {
   }
   })
 
+//Delete
+server.delete("/:id",async (req,res,next) => {
+ try {
+  await db("accounts").where("id",req.params.id).del()
+  res.status(204).end()
+ }
+ catch(err){
+  next(err)
+ }
+})
 server.use((err, req, res, next) => {
 	console.log(err)
 	res.status(500).json({
